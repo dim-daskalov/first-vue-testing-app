@@ -1,0 +1,45 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+<template>
+  <teleport to=".modals-container">
+    <div v-if="modelValue" class="modal-dark">
+      <h1>
+        {{ props.title }}
+      </h1>
+      <slot />
+      <button @click="handleClick">Hide modal</button>
+    </div>
+  </teleport>
+</template>
+
+<script setup>
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+  title: {
+    type: String,
+    default: 'Modal title',
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const handleClick = () => {
+  emit('update:modelValue', false)
+}
+</script>
+
+<style scoped>
+.modal-dark {
+  background-color: #333;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  color: white;
+}
+</style>
